@@ -2,15 +2,19 @@
   <ion-toolbar >
     <ion-buttons slot="start" >
       <ion-back-button routerLink="/login" icon="arrow-back"></ion-back-button>
+      
     </ion-buttons>
     <ion-title>Menu</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
-<ion-content [fullscreen]="true" class="custom-background">
-  <div class="welcome-card tertiary ">
-    <h2>Bienvenido:Usuario</h2>
+<ion-content [fullscreen]="true" (click)="cargaUsaurios" class="custom-background">
+  <div class="welcome-card tertiary">
+    <h2>Bienvenido: {{ nombre }}</h2>
+    <h2>Correo: {{ correo }}</h2>
+    
+    <ion-icon name="settings" (click)="saveProfileChanges()"></ion-icon>
   </div>
    <ion-card-header>
     <ion-card-title class="ion-text-center">Menu</ion-card-title>
@@ -24,11 +28,14 @@
       <ion-icon name="eye-outline" slot="start"></ion-icon>
       Visualizar
     </ion-button>
-    <ion-button class="full-width-button" color="danger"  routerLink="/home">
+    <ion-button class="full-width-button" color="danger"  (click)="logout()">
       <ion-icon name="power-outline" slot="start"></ion-icon>
       Desconectar
     </ion-button>
+      <button  class="full-width-button" color="tertiary"  (click)="onClearCacheClick()">Borrar Caché</button>
   </div>
+
+  
   <ion-footer>
     <ion-row class="footer-content">
       <ion-col size="6" class="text-right">

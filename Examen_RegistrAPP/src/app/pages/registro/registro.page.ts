@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
+
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -17,7 +18,9 @@ export class RegistroPage {
   confirmarContrasena: string = '';
   genero: string = '';
 
-  constructor(private auth: AngularFireAuth, private router: Router) {}
+  constructor(private auth: AngularFireAuth,
+               private router: Router,
+               private storage:StorageService) {}
 
   async registro() {
 
@@ -35,13 +38,17 @@ export class RegistroPage {
       const userCredential = await this.auth.createUserWithEmailAndPassword(this.correo, this.contrasena);
 
       if (userCredential.user) {
+        var user = [{
+          correo: this.correo,
+          nombre: this.nombre
+        }]
+        this.storage.guardarUsuario(user);
         alert('Registro exitoso');
         this.router.navigateByUrl('/login');
       } else {
         alert('No se obtuvo un usuario después del registro.');
       }
     } catch (error) {
-      console.error('Error durante el registro:', error);
     }
   }
 }

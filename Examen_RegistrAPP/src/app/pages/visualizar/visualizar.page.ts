@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+import { Asignaturas } from 'src/app/models/asignaturas';
+import { AsignaturasService } from 'src/app/services/asignaturas.service';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-visualizar',
@@ -8,15 +13,29 @@ import { NavController } from '@ionic/angular';
 })
 export class VisualizarPage implements OnInit {
 
-  constructor(private navCtrl: NavController) { }
+  array:Asignaturas[]=this.asignaturaService.arrayasignaturas;
+ 
+  indice:number=0;
 
-  ngOnInit() {
+  constructor(private router:Router,
+              private modalController: ModalController,
+              private asignaturaService:AsignaturasService,
+              private activatedRoute :ActivatedRoute
+              
+             ) { }
+
+  ngOnInit() {      
+
+  }
+
+  verAsignatura(indice:number
+                ) {
+
+    this.router.navigate(['/asignatura',indice,]);
   }
 
 
-  verAsignatura() {
-    // Navegar a la página de asignatura
-    this.navCtrl.navigateForward('/asignatura');
-  }
 
+  
 }
+

@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router'; 
 import { HelperService } from 'src/app/services/helper.service'; 
 
+
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.page.html',
@@ -14,7 +15,8 @@ export class ResetPasswordPage implements OnInit {
   constructor(
     private auth: AngularFireAuth,
     private router: Router, 
-    private helper: HelperService 
+    private helper: HelperService,
+    private helperService: HelperService 
   ) {}
 
   ngOnInit() {

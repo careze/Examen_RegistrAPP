@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/app/services/auth.service'; 
+import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
 
 const routes: Routes = [
   {
@@ -17,7 +20,9 @@ const routes: Routes = [
   },
   {
     path: 'menu',
-    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule)
+    loadChildren: () => import('./pages/menu/menu.module').then( m => m.MenuPageModule),
+     canActivate: [AuthGuard] 
+
   },
   {
     path: 'reset-password',
@@ -36,12 +41,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/visualizar/visualizar.module').then( m => m.VisualizarPageModule)
   },
   {
-    path: 'asignatura',
+    path: 'asignatura/:indice',
     loadChildren: () => import('./pages/asignatura/asignatura.module').then( m => m.AsignaturaPageModule)
   },
   {
     path: 'asistencia',
     loadChildren: () => import('./pages/asistencia/asistencia.module').then( m => m.AsistenciaPageModule)
+  },
+  {
+    path: 'qr',
+    loadChildren: () => import('./modals/qr/qr.module').then( m => m.QrPageModule)
   },
 ];
 

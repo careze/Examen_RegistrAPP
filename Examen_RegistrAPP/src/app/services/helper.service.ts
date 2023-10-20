@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -51,16 +52,21 @@ export class HelperService {
 
 
 
-async showLoader(msg:string){
-var loader = await this.loadingController.create(
-  {
-    cssClass:"loaderClass",
-    message:msg,
-    translucent:true
-  }
-  );
+async showLoader(msg: string): Promise<HTMLIonLoadingElement> {
+  const loader = await this.loadingController.create({
+    cssClass: 'loaderClass',
+    message: msg,
+    translucent: true
+  });
+
   await loader.present();
+
   return loader;
+}
+async dismissLoader(loader: HTMLIonLoadingElement): Promise<void> {
+  if (loader) {
+    await loader.dismiss();
+  }
 }
 
 async showToast(msg:string, duracion:number = 2000){
@@ -70,23 +76,23 @@ async showToast(msg:string, duracion:number = 2000){
       message:msg,
       duration:duracion,
       position:"bottom",
-      color:"dark"
+      color:"primary"
     });
     await toast.present();
     return toast;
 }
 
-
-async showModal(componente:any,props:any= {}, hideable = true){
-  var modal = await this.modalController.create(
-    {
-      component:componente,
-      cssClass:"modalClass",
-      componentProps:props,
-      backdropDismiss:hideable
-    });
-    await modal.present();
+async showModal(componente: any, props: any = {}, hideable = true) {
+  const modal = await this.modalController.create({
+    component: componente,
+    cssClass: 'custom-modal', // Puedes asignar una clase CSS personalizada si lo deseas
+    componentProps: props,
+    backdropDismiss: hideable,
+  
+    mode: 'ios' // Esto ayuda a asegurarse de que los estilos sean consistentes en dispositivos móviles
+  });
+  await modal.present();
 }
 
-
 }
+

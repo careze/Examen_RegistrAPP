@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Preferences } from '@capacitor/preferences';
 import { Observable } from 'rxjs';
+import { Usuario } from '../models/usuario';
 
 const keyStorageUser = "usuarioData";
 
@@ -10,9 +11,10 @@ const keyStorageUser = "usuarioData";
 })
 export class StorageService {
 
+
   public correoUsuario: string = "";
 
-  constructor(private authFire: AngularFireAuth) { }
+  constructor() { }
 
   async getItem(llave: string): Promise<string | null> {
     const obj = await Preferences.get({ key: llave });
@@ -23,7 +25,9 @@ export class StorageService {
     await Preferences.set({ key: llave, value: valor });
   }
 
-  async obtenerUsuarios() {
+
+  
+  async obtenerUsuarios():Promise<Usuario[]> {
     const usuarios = await this.getItem(keyStorageUser);
 
     if (usuarios == null) {
@@ -39,6 +43,8 @@ export class StorageService {
     }
   }
 
+
+
   async guardarUsuario(usuario: any[]) {
     const usersStorage = await this.obtenerUsuarios();
     for (const i of usersStorage) {
@@ -49,22 +55,14 @@ export class StorageService {
     this.setItem(keyStorageUser, JSON.stringify(usuario));
   }
 
-  // ...
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthService {
-  user: Observable<any>;
-
-  constructor(private afAuth: AngularFireAuth) {
-    this.user = afAuth.authState;
+  // Nuevo método para almacenar el correo del usuario
+  async almacenarCorreoUsuario(correo: string) {
+    this.correoUsuario = correo;
+    await this.setItem("correoUsuario", correo);
   }
 
-  getCurrentUser() {
-    return this.afAuth.currentUser;
+  // Nuevo método para obtener el correo del usuario almacenado
+  async obtenerCorreoUsuario(): Promise<string | null> {
+    return this.getItem("correoUsuario");
   }
-
-  // Otros métodos de autenticación como login, logout, registro, etc.
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HelperService } from 'src/app/services/helper.service';
 import { StorageService } from 'src/app/services/storage.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -16,11 +17,11 @@ export class LoginPage implements OnInit {
   contrasena:string = "";
   nombreDeUsuario: string="";
 
-
   constructor(private router:Router,
               private helper:HelperService,
               private auth:AngularFireAuth,
-              private storage:StorageService
+              private storage:StorageService,
+              private helperService: HelperService
               ) { }
 
 ngOnInit() {
@@ -35,33 +36,35 @@ onReset() {
 
 /* Conecta los valores para ingresar */
 async onLogin() {
-  if (this.usuario == "") {
-    alert("Debe ingresar un usuario");
+  if (this.usuario === "") {
+    this.helper.showAlert('Debe ingresar un usuario', 'Error');
     return;
   }
-  if (this.contrasena == "") {
-    alert("Debe ingresar una contraseña");
+  if (this.contrasena === "") {
+    this.helper.showAlert('Debe ingresar una contraseña', 'Error');
     return;
   }
+  const loader = await this.helperService.showLoader('Cargando datos...');
+
   try {
-    const userCredential = await this.auth.signInWithEmailAndPassword(
-      this.usuario,
-      this.contrasena 
-    );
+    const userCredential = await this.auth.signInWithEmailAndPassword(this.usuario, this.contrasena);
+    
 
     if (userCredential.user) {
       this.nombreDeUsuario = this.usuario; 
       this.storage.correoUsuario = this.usuario;
+      await this.helperService.dismissLoader(loader);
       this.router.navigateByUrl('/menu');
+      
     } else {
-      alert("Usuario o contraseña incorrecta.");
+      this.helper.showAlert('Usuario o contraseña incorrecta', 'Error');
+      await this.helperService.dismissLoader(loader);
     }
   } catch (error) {
-    alert("Ocurrió un error durante el inicio de sesión.");
+    this.helper.showAlert('Ocurrió un error durante el inicio de sesión', 'Error');
+    await this.helperService.dismissLoader(loader);
   }
 }
-
-
 /* Boton animado */
 animateButton() {
   const button = document.getElementById('animatable-button');   
@@ -73,7 +76,9 @@ animateButton() {
     }
   }
 
-  
 
+
+
+ 
   
  }

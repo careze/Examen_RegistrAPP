@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BarcodeScanner } from 'capacitor-barcode-scanner';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-escanear',
@@ -8,13 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EscanearPage implements OnInit {
 
-  constructor() { }
+  resultQr: any;
+
+  constructor(private activatedRoute:ActivatedRoute,
+              private helper:HelperService) { }
 
 
  ngOnInit() {
   }
- 
 
+      async scanner(){
+        this.resultQr  = (await BarcodeScanner.scan()).code;
+        console.log("obj QR",JSON.parse(this.resultQr));
+      }
 }
 
 
