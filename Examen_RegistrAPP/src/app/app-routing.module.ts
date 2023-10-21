@@ -4,6 +4,7 @@ import { AuthGuard } from 'src/app/services/auth.service';
 import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 
 
+
 const routes: Routes = [
   {
     path: 'home',

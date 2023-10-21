@@ -43,8 +43,6 @@ export class StorageService {
     }
   }
 
-
-
   async guardarUsuario(usuario: any[]) {
     const usersStorage = await this.obtenerUsuarios();
     for (const i of usersStorage) {
@@ -55,13 +53,13 @@ export class StorageService {
     this.setItem(keyStorageUser, JSON.stringify(usuario));
   }
 
-  // Nuevo método para almacenar el correo del usuario
+ 
   async almacenarCorreoUsuario(correo: string) {
     this.correoUsuario = correo;
     await this.setItem("correoUsuario", correo);
   }
 
-  // Nuevo método para obtener el correo del usuario almacenado
+
   async obtenerCorreoUsuario(): Promise<string | null> {
     return this.getItem("correoUsuario");
   }

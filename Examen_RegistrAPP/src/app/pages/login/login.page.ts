@@ -76,9 +76,4 @@ animateButton() {
     }
   }
 
-
-
-
- 
-  
  }

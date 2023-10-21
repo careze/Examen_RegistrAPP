@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -85,14 +86,16 @@ async showToast(msg:string, duracion:number = 2000){
 async showModal(componente: any, props: any = {}, hideable = true) {
   const modal = await this.modalController.create({
     component: componente,
-    cssClass: 'custom-modal', // Puedes asignar una clase CSS personalizada si lo deseas
+    cssClass: 'custom-modal-slide-in',
     componentProps: props,
     backdropDismiss: hideable,
-  
-    mode: 'ios' // Esto ayuda a asegurarse de que los estilos sean consistentes en dispositivos móviles
+    mode: 'ios'
   });
   await modal.present();
 }
 
+showCustomModal(componente: any, props: any = {}, hideable = true) {
+  this.showModal(componente, props, hideable);
+}
 }
 

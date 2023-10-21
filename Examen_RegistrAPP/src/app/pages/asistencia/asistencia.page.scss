@@ -33,3 +33,19 @@ ion-content {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
   
+
+  /* CSS para el modal estilo ventana */
+.custom-modal-slide-in {
+  animation: slide-in 0.5s ease-in-out;
+  max-width: 80%; 
+  margin: 0 auto; 
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

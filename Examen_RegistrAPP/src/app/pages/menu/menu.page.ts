@@ -62,7 +62,6 @@ export class MenuPage implements OnInit {
   }
 
   async onClearCacheClick() {
-    // Llamar a la función clearCache cuando el usuario haga clic en un botón u ocurra algún evento.
     await this.clearCache();
   }
 
